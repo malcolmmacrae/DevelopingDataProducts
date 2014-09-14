@@ -104,6 +104,20 @@ shinyServer(
         
         output$d <- renderText({format(input$date, "%Y-%m-%d")})
         
+        output$pp.plot <- renderPlot({
+
+            d <- as.POSIXct(format(input$date, "%Y-%m-%d"), format="%Y-%m-%d")
+
+            pp <- load.pp(d)
+            
+            plot(Price ~ HE, type="l", col="red", data=pp,
+                 main=paste("Pool Price: ", format(d, "%d-%b-%y")), 
+                 xlab="Hour Ending", xlim=c(0,25),
+                 ylab="Pool Price ($/MWh)")
+            abline(v=input$he, col="chartreuse4")
+            
+        })
+        
         output$emmo.plot <- renderPlot({
             
             d <- as.POSIXct(format(input$date, "%Y-%m-%d"), format="%Y-%m-%d")
@@ -116,7 +130,7 @@ shinyServer(
             
             plot(c(0, emmo.he$Size.cum), c(0, emmo.he$Price), col="blue", type="S",
                  xlab="System Load (MW)", ylab="Offer Price ($/MWh)",
-                 main=paste(format(d, "%d-%b-%y"),
+                 main=paste("EMMO:", format(d, "%d-%b-%y"),
                             "HE", formatC(input$he, width=2, format="d", flag="0")))
             legend("topleft", paste("Pool Price: $", formatC(pp.he, digits=2, format="f"), sep=""), bty="n")
             abline(pp.he,0,col="red")

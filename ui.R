@@ -11,6 +11,7 @@ shinyUI(pageWithSidebar(
         submitButton("Submit")
     ),
     mainPanel(
+        plotOutput("pp.plot"),
         plotOutput("emmo.plot"),
         p(a("Documentation", href="index.html"))
     )
