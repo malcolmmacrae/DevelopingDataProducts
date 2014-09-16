@@ -1,5 +1,3 @@
-my.tz = Sys.timezone()
-
 #   Check if EMMO was already downloaded; otherwise download to date-stamped file.
 get.emmo <- function(d) {
     

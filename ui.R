@@ -1,8 +1,14 @@
 library(shiny)
 
-d.max <- Sys.Date()-60
-now.he <- as.POSIXlt(Sys.time())$hour + 1
+#   Get current time from system, and convert to local Alberta time.
+now.ab <- Sys.time()
+attr(now.ab, "tzone") <- "America/Denver"
 
+#   Calculate initial arguments to date and HE parameters.
+d.max <- as.Date(now.ab) - 60
+now.he <- as.POSIXlt(now.ab)$hour + 1
+
+#   Define Shiny user interface.
 shinyUI(pageWithSidebar(
     headerPanel("Alberta Energy-Market Merit Order"),
     sidebarPanel(
